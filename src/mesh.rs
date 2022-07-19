@@ -6,12 +6,7 @@ use std::{
 use crate::triangle::Triangle;
 
 pub struct Mesh {
-    triangles: Vec<Triangle>,
-}
-
-pub struct IterMesh<'a> {
-    inner: &'a Mesh,
-    pos: usize,
+    pub triangles: Vec<Triangle>,
 }
 
 impl Mesh {
@@ -31,6 +26,7 @@ impl Mesh {
                         break;
                     };
                     let vec = line.trim().split_whitespace().collect::<Vec<&str>>();
+                    println!("{:?}", vec);
                     if vec.len() > 0 {
                         match vec[0] {
                             "v" => points.push([
@@ -56,13 +52,6 @@ impl Mesh {
         Ok(Mesh { triangles })
     }
 
-    pub fn iter<'a>(&'a self) -> IterMesh<'a> {
-        IterMesh {
-            inner: self,
-            pos: 0,
-        }
-    }
-
     pub fn unit_cube() -> Mesh {
         Mesh {
             triangles: vec![
@@ -85,18 +74,6 @@ impl Mesh {
                 Triangle::from_points(1., 0., 1., 0., 0., 1., 0., 0., 0.),
                 Triangle::from_points(1., 0., 1., 0., 0., 0., 1., 0., 0.),
             ],
-        }
-    }
-}
-
-impl<'a> Iterator for IterMesh<'a> {
-    type Item = &'a Triangle;
-    fn next(&mut self) -> Option<Self::Item> {
-        if self.pos == self.inner.triangles.len() {
-            None
-        } else {
-            self.pos += 1;
-            Some(&self.inner.triangles[self.pos - 1])
         }
     }
 }
