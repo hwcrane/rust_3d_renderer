@@ -35,9 +35,18 @@ impl Mesh {
                                 vec[3].parse().unwrap(),
                             ]),
                             "f" => triangles.push(Triangle::from_vercices(
-                                points[vec[1].parse::<usize>().unwrap() - 1],
-                                points[vec[2].parse::<usize>().unwrap() - 1],
-                                points[vec[3].parse::<usize>().unwrap() - 1],
+                                points[vec[1][0..vec[1].find('/').unwrap()]
+                                    .parse::<usize>()
+                                    .unwrap()
+                                    - 1],
+                                points[vec[2][0..vec[2].find('/').unwrap()]
+                                    .parse::<usize>()
+                                    .unwrap()
+                                    - 1],
+                                points[vec[3][0..vec[3].find('/').unwrap()]
+                                    .parse::<usize>()
+                                    .unwrap()
+                                    - 1],
                             )),
                             _ => {}
                         }

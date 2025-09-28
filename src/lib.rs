@@ -2,18 +2,15 @@ mod camera;
 mod mesh;
 mod triangle;
 
-use std::time::{Instant, SystemTime};
+use std::time::Instant;
 
 use camera::Camera;
 use mesh::Mesh;
 use nalgebra as nl;
 use nl::vector;
-use rayon::{
-    iter::{IntoParallelRefIterator, ParallelIterator},
-    prelude,
-};
+use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use sdl2::{
-    event::Event, gfx::primitives::DrawRenderer, pixels::Color, render::Canvas, sys::CurrentTime,
+    event::Event, gfx::primitives::DrawRenderer, pixels::Color, render::Canvas,
     video::Window,
 };
 use triangle::Triangle;
@@ -57,9 +54,10 @@ pub fn run() {
     // let pot = Mesh::load("xyzrgb_dragon.obj").unwrap();
     // let pot = Mesh::load("teapot.obj").unwrap();
     // let pot = Mesh::load("african_head.obj").unwrap();
-    // let pot = Mesh::load("mountains.obj").unwrap();
+    let pot = Mesh::load("mountains.obj").unwrap();
     // let pot = Mesh::load("axis.obj").unwrap();
-    let pot = Mesh::unit_cube();
+    // let pot = Mesh::load("nysin6hwdbxb.obj").unwrap();
+    // let pot = Mesh::unit_cube();
 
     let time = Instant::now();
     let mut last_time = 0;
@@ -116,6 +114,7 @@ pub fn run() {
                     for tri in &mut proj_tri {
                         tri.col = [(255. * dp) as u8, (255. * dp) as u8, (255. * dp) as u8];
                     }
+
                     proj_tri
                 } else {
                     vec![]
